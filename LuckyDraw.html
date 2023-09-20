@@ -6,100 +6,100 @@
   <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
-  <h1 id="pageTitle" onclick="toggleGeneratingNumbers()"></h1>
+  <h1 id="pageTitle"></h1>
   <div class="button-container">
-    <button id="toggleButton" onclick="toggleGeneratingNumbers()">开始抽奖</button>
+    <button id="toggleButton">开始抽奖</button>
   </div>
   <div class="displayed-numbers" id="displayedNumbers"></div>
   
   <script>
-    var intervalId;  // 用于存储计时器的ID，控制抽奖的开始和停止
-    var displayedNumbers = [];  // 存储已显示的号码
-    var upperLimit = 10; // 参与抽奖的人数
-    var maxLimitReached = false; // 用于跟踪是否达到上限
-    var timeInterval = 50; // 设置数字滚动时间，单位是毫秒
+    // 定义常量
+    const upperLimit = 10; // 参与抽奖的人数上限
+    const timeInterval = 50; // 数字滚动时间间隔，单位毫秒
+    
+    // 声明全局变量
+    let intervalId; // 用于存储计时器的ID，控制抽奖的开始和停止
+    const displayedNumbers = []; // 存储已显示的号码
+    let maxLimitReached = false; // 用于跟踪是否达到上限
 
+    // 获取页面元素
+    const pageTitle = document.getElementById("pageTitle");
+    const toggleButton = document.getElementById("toggleButton");
+    const displayedNumbersElement = document.getElementById("displayedNumbers");
+
+    // 生成随机数字
     function generateRandomNumber() {
-      var randomNumber;
+      let randomNumber;
       do {
         // 随机生成一个数字，确保不会重复
         randomNumber = Math.floor(Math.random() * upperLimit) + 1;
       } while (displayedNumbers.includes(randomNumber));
 
-      var pageTitle = document.getElementById("pageTitle");
-      pageTitle.textContent = "";  // 清空标题内容
-
-      var numberSpan = document.createElement("span");
+      pageTitle.textContent = "";
+      const numberSpan = document.createElement("span");
       numberSpan.textContent = randomNumber;
+      // 根据抽奖状态设置样式类
       numberSpan.classList.toggle("on-running", intervalId !== null);
       numberSpan.classList.toggle("winner-text", intervalId === null);
-
-      pageTitle.appendChild(numberSpan);  // 将随机数字添加到标题中
+      pageTitle.appendChild(numberSpan);
 
       if (intervalId === null) {
         displayedNumbers.push(randomNumber);
-        updateDisplayedNumbers();  // 更新已显示的号码列表
+        updateDisplayedNumbers();
         if (displayedNumbers.length === upperLimit) {
-          // 所有数字都被抽取，显示最后一个号码
-          pageTitle.textContent = "";  // 清空标题内容
-          var lastNumberSpan = document.createElement("span");
+          pageTitle.textContent = "";
+          const lastNumberSpan = document.createElement("span");
           lastNumberSpan.textContent = randomNumber;
           lastNumberSpan.classList.toggle("on-running", intervalId !== null);
           lastNumberSpan.classList.toggle("winner-text", intervalId === null);
-          pageTitle.appendChild(lastNumberSpan);  // 将最后一个号码添加到标题中
-
-          var button = document.getElementById("toggleButton");
-          button.textContent = "再来一次";  // 更改按钮文本
-          button.onclick = function() {
-            // 重新加载整个页面
-            window.location.reload();
-          };
+          pageTitle.appendChild(lastNumberSpan);
+          toggleButton.textContent = "再来一次";
+          toggleButton.onclick = () => window.location.reload();
           maxLimitReached = true; // 达到上限
           return; // 停止运行程序
         }
       }
     }
 
+    // 切换抽奖状态
     function toggleGeneratingNumbers() {
-      var button = document.getElementById("toggleButton");
       if (maxLimitReached) {
-        // 达到上限时，点击按钮将重新加载整个页面
-        window.location.reload();
+        window.location.reload(); // 达到上限时，点击按钮将重新加载整个页面
         return;
       }
       if (intervalId) {
         clearInterval(intervalId);
         intervalId = null;
         if (displayedNumbers.length < upperLimit) {
-          button.textContent = "继续抽奖"; // 达到上限前将按钮文本设为"继续抽奖"
+          toggleButton.textContent = "继续抽奖"; // 达到上限前将按钮文本设为"继续抽奖"
         }
-        generateRandomNumber();  // 开始抽奖
+        generateRandomNumber(); // 开始抽奖
       } else {
-        intervalId = setInterval(generateRandomNumber, timeInterval);  // 启动计时器，定时抽奖
-        button.textContent = "停"; // 开始抽奖时的按钮文字
+        intervalId = setInterval(generateRandomNumber, timeInterval); // 启动计时器，定时抽奖
+        toggleButton.textContent = "停"; // 开始抽奖时的按钮文字
       }
     }
 
+    // 更新已显示的号码列表
     function updateDisplayedNumbers() {
-      var displayedNumbersElement = document.getElementById("displayedNumbers");
       displayedNumbersElement.textContent = "";
-
-      for (var i = 0; i < displayedNumbers.length; i++) {
-        var numberSpan = document.createElement("span");
+      for (let i = 0; i < displayedNumbers.length; i++) {
+        const numberSpan = document.createElement("span");
         numberSpan.textContent = displayedNumbers[i];
-        displayedNumbersElement.appendChild(numberSpan);  // 更新已显示的号码列表
+        displayedNumbersElement.appendChild(numberSpan);
       }
     }
 
+    // 页面加载完成后执行的初始化操作
     window.onload = function() {
-      var pageTitle = document.getElementById("pageTitle");
       pageTitle.textContent = "幸运大抽奖";
-      pageTitle.classList.add("onload-text");  // 添加初始样式类
-
-      var button = document.getElementById("toggleButton");
-      button.textContent = "开始抽奖";  // 设置按钮初始文本
+      pageTitle.classList.add("onload-text"); // 添加初始样式类
+      toggleButton.textContent = "开始抽奖"; // 设置按钮初始文本
+      
+      // 添加事件监听器
+      toggleButton.addEventListener("click", toggleGeneratingNumbers);
+      pageTitle.addEventListener("click", toggleGeneratingNumbers);
     };
   </script>
-  
 </body>
 </html>
