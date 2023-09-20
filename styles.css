@@ -1,0 +1,61 @@
+/* styles.css */
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  overflow: hidden;
+  background-image: url("Picture1.jpg"); /* 替换为您的图片 */
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+h1, p {
+  text-align: center;
+}
+
+.button-container {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.winner-text {
+  color: red;
+  font-size: 50vh;
+  text-align: center;
+  cursor: pointer;
+}
+
+.onload-text {
+  color: red;
+  font-size: 25vh;
+  text-align: center;
+  cursor: pointer;
+}
+
+.on-running {
+  color: brown;
+  font-size: calc(25vh);
+}
+
+.displayed-numbers {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  font-size: 2rem;
+  color: gold;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-height: calc(100vh - 20px);
+  overflow-y: auto;
+  flex-wrap: wrap;
+  max-width: 200px;
+  margin-left: 0;
+}
