@@ -1,5 +1,4 @@
 /* styles.css */
-
 body {
   display: flex;
   flex-direction: column;
@@ -8,54 +7,77 @@ body {
   height: 100vh;
   margin: 0;
   overflow: hidden;
-  background-image: url("Picture1.jpg"); /* 替换为您的图片 */
-  background-size: contain;
+  background-image: url("bg.jpg");
+  background-size: cover;
   background-repeat: no-repeat;
-  background-position: center;
+  background-position: top;  /* 设置背景图片顶端对齐 */
+  border: none;
 }
 
-h1, p {
+h1,
+p {
   text-align: center;
 }
 
 .button-container {
+  border: none;
   position: fixed;
   bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
 }
 
+.button-container button {
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #3498db;
+  color: #fff;
+  transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+  border-radius: 10px;  /* 添加圆角 */
+}
+
+.button-container button:hover {
+  border: none;
+  cursor: pointer;
+  background-color: #2980b9;
+  color: #ecf0f1;
+  box-shadow: 0 0 20px 5px rgba(255, 255, 0, 0.7);
+}
+
 .winner-text {
-  color: red;
+  color: rgb(255, 225, 0);
   font-size: 50vh;
   text-align: center;
   cursor: pointer;
 }
 
 .onload-text {
-  color: red;
+  color: rgb(255, 225, 0);
   font-size: 25vh;
   text-align: center;
   cursor: pointer;
 }
 
 .on-running {
-  color: brown;
+  color: gold;
   font-size: calc(25vh);
 }
 
 .displayed-numbers {
   position: fixed;
-  top: 10px;
+  bottom: 10px;
   left: 10px;
-  font-size: 2rem;
-  color: gold;
+  font-size: 1rem;
+  color: rgb(255, 0, 0);
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  flex-direction: row;  /* 修改为水平排列 */
+  align-items: center;
   max-height: calc(100vh - 20px);
-  overflow-y: auto;
-  flex-wrap: wrap;
-  max-width: 200px;
-  margin-left: 0;
+  overflow-x: auto;  /* 使用水平滚动 */
+  white-space: nowrap;  /* 防止换行 */
+}
+
+.displayed-numbers span {
+  margin-right: 5px;  /* 调整号码之间的间距 */
 }
