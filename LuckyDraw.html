@@ -6,6 +6,23 @@
   <meta charset="UTF-8">
   <link rel="stylesheet" type="text/css" href="styles.css">
 
+  <style>
+    /* 新添加的样式 */
+    #muteButton {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      padding: 10px;
+      background-color: transparent;
+      /* 透明背景 */
+      border: none;
+      cursor: pointer;
+      opacity: 0.7;
+      /* 设置透明度 */
+      color: #fff;
+      /* 设置文本颜色为白色 */
+    }
+  </style>
 </head>
 
 <body>
@@ -15,6 +32,17 @@
   </div>
   <div class="displayed-numbers" id="displayedNumbers"></div>
 
+  <audio id="backgroundMusic">
+    <source src="play_music.mp3" type="audio/mpeg">
+  </audio>
+  <!-- 添加中奖音乐 -->
+  <audio id="winningMusic">
+    <source src="winning_music.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- 新添加的按钮 -->
+  <button id="muteButton">静音</button>
+
   <script>
     // 定义常量
     const upperLimit = 300; // 参与抽奖的人数上限
@@ -22,7 +50,7 @@
     const lotteryTitleText = "幸运大抽奖"; // 抽奖标题文本
     const startButtonText = "开始抽奖"; // 开始抽奖按钮文本
     const continueButtonText = "继续"; // 继续抽奖按钮文本
-    const stopButtonText = "停。。。"; // 停止抽奖按钮文本
+    const stopButtonText = "停。。"; // 停止抽奖按钮文本
     const resetButtonText = "重新再来一次"; // 重新加载页面按钮文本
 
     // 声明全局变量
@@ -34,6 +62,9 @@
     const pageTitle = document.getElementById("pageTitle");
     const toggleButton = document.getElementById("toggleButton");
     const displayedNumbersElement = document.getElementById("displayedNumbers");
+
+    // 获取静音按钮
+    const muteButton = document.getElementById("muteButton");
 
     // 生成随机数字
     function generateRandomNumber() {
@@ -82,10 +113,12 @@
         if (displayedNumbers.length < upperLimit) {
           toggleButton.textContent = continueButtonText; // 达到上限前将按钮文本设为"继续抽奖"
         }
+        playMusic(); // 停止抽奖时停止播放音乐
         generateRandomNumber(); // 开始抽奖
       } else {
         intervalId = setInterval(generateRandomNumber, timeInterval);
         toggleButton.textContent = stopButtonText; // 开始抽奖时的按钮文字
+        playMusic(); // 开始抽奖时播放音乐
       }
     }
 
@@ -99,6 +132,41 @@
       }
     }
 
+    // 添加音乐播放功能
+    function playMusic() {
+      const backgroundMusic = document.getElementById("backgroundMusic");
+      const winningMusic = document.getElementById("winningMusic");
+
+      // 判断抽奖状态（通过 intervalId 是否存在）
+      if (intervalId) {
+        backgroundMusic.play(); // 如果抽奖正在进行，播放背景音乐
+        winningMusic.pause(); // 暂停音乐
+        winningMusic.currentTime = 0; // 重置音乐到开始位置
+
+      } else {
+        backgroundMusic.pause(); // 如果抽奖已停止，暂停背景音乐
+        backgroundMusic.currentTime = 0; // 重置音乐到开始位置
+        winningMusic.play(); // 如果抽奖已停止，播放中奖音乐
+      }
+    }
+
+    // 控制静音状态的函数
+    function toggleMute() {
+      const backgroundMusic = document.getElementById("backgroundMusic");
+      const winningMusic = document.getElementById("winningMusic");
+
+      // 切换音乐的静音状态
+      backgroundMusic.muted = !backgroundMusic.muted;
+      winningMusic.muted = !winningMusic.muted;
+
+      // 根据静音状态更新按钮文本
+      if (backgroundMusic.muted && winningMusic.muted) {
+        muteButton.textContent = "取消静音";
+      } else {
+        muteButton.textContent = "静音";
+      }
+    }
+
     // 页面加载完成后执行的初始化操作
     window.onload = function () {
       pageTitle.textContent = lotteryTitleText;
@@ -108,7 +176,9 @@
       // 添加事件监听器
       toggleButton.addEventListener("click", toggleGeneratingNumbers);
       pageTitle.addEventListener("click", toggleGeneratingNumbers);
+      muteButton.addEventListener("click", toggleMute);
     };
+
   </script>
 
 </body>
