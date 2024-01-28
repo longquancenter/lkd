@@ -10,9 +10,12 @@ body {
   background-image: url("bg.jpg");
   background-size: cover;
   background-repeat: no-repeat;
-  background-position: top;  /* 设置背景图片顶端对齐 */
+  background-position: top;
+  /* 设置背景图片顶端对齐 */
   border: none;
 }
+
+
 
 h1,
 p {
@@ -34,7 +37,8 @@ p {
   background-color: #3498db;
   color: #fff;
   transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
-  border-radius: 10px;  /* 添加圆角 */
+  border-radius: 10px;
+  /* 添加圆角 */
 }
 
 .button-container button:hover {
@@ -50,13 +54,20 @@ p {
   font-size: 50vh;
   text-align: center;
   cursor: pointer;
+
+
 }
+
+
+
+
 
 .onload-text {
   color: rgb(255, 225, 0);
   font-size: 25vh;
   text-align: center;
   cursor: pointer;
+
 }
 
 .on-running {
@@ -71,13 +82,33 @@ p {
   font-size: 1rem;
   color: rgb(255, 0, 0);
   display: flex;
-  flex-direction: row;  /* 修改为水平排列 */
+  flex-direction: row;
+  /* 修改为水平排列 */
   align-items: center;
   max-height: calc(100vh - 20px);
-  overflow-x: auto;  /* 使用水平滚动 */
-  white-space: nowrap;  /* 防止换行 */
+  overflow-x: auto;
+  /* 使用水平滚动 */
+  white-space: nowrap;
+  /* 防止换行 */
 }
 
 .displayed-numbers span {
-  margin-right: 5px;  /* 调整号码之间的间距 */
+  margin-right: 5px;
+  /* 调整号码之间的间距 */
+}
+
+/* 新添加的样式 */
+#muteButton {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 10px;
+  background-color: transparent;
+  /* 透明背景 */
+  border: none;
+  cursor: pointer;
+  opacity: 0.7;
+  /* 设置透明度 */
+  color: #fff;
+  /* 设置文本颜色为白色 */
 }
