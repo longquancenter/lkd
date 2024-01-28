@@ -2,27 +2,11 @@
 <html>
 
 <head>
-  <title>幸运大抽奖</title>
   <meta charset="UTF-8">
+  <title>幸运大抽奖</title>
+  
   <link rel="stylesheet" type="text/css" href="styles.css">
 
-  <style>
-    /* 新添加的样式 */
-    #muteButton {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      padding: 10px;
-      background-color: transparent;
-      /* 透明背景 */
-      border: none;
-      cursor: pointer;
-      opacity: 0.7;
-      /* 设置透明度 */
-      color: #fff;
-      /* 设置文本颜色为白色 */
-    }
-  </style>
 </head>
 
 <body>
@@ -31,16 +15,15 @@
     <button id="toggleButton">开始抽奖</button>
   </div>
   <div class="displayed-numbers" id="displayedNumbers"></div>
-
+ <!-- 开始抽奖的音乐 -->
   <audio id="backgroundMusic">
     <source src="play_music.mp3" type="audio/mpeg">
   </audio>
-  <!-- 添加中奖音乐 -->
+  <!-- 中奖音乐 -->
   <audio id="winningMusic">
     <source src="winning_music.mp3" type="audio/mpeg">
   </audio>
-
-  <!-- 新添加的按钮 -->
+  <!-- 静音按钮 -->
   <button id="muteButton">静音</button>
 
   <script>
