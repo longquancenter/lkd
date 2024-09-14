@@ -1,9 +1,4 @@
-/* styles.css */
-<<<<<<< HEAD
-
 /* 整体页面布局 */
-=======
->>>>>>> ad5473a94f52df138ee1669eb6642fd6af60fa48
 body {
   display: flex;
   flex-direction: column;
@@ -16,20 +11,14 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: top;
-<<<<<<< HEAD
   border: none;
-=======
   /* 设置背景图片顶端对齐 */
-  border: none;
 }
 
-
-
-h1,
-p {
+h1,p {
   text-align: center;
->>>>>>> ad5473a94f52df138ee1669eb6642fd6af60fa48
 }
+
 
 /* 抽奖按钮容器 */
 .button-container {
@@ -40,85 +29,46 @@ p {
   transform: translateX(-50%);
 }
 
-<<<<<<< HEAD
 /* 抽奖按钮的样式 */
-=======
->>>>>>> ad5473a94f52df138ee1669eb6642fd6af60fa48
 .button-container button {
   border: none;
   padding: 10px 20px;
   font-size: 16px;
-<<<<<<< HEAD
   background-color: #2295e2;
-  color: #fff;
-  transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
-  border-radius: 10px;
-}
-
-/* 鼠标悬停在按钮上的样式 */
-=======
-  background-color: #3498db;
   color: #fff;
   transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
   border-radius: 10px;
   /* 添加圆角 */
 }
 
->>>>>>> ad5473a94f52df138ee1669eb6642fd6af60fa48
 .button-container button:hover {
   border: none;
   cursor: pointer;
   background-color: #2980b9;
   color: #ecf0f1;
-<<<<<<< HEAD
-  box-shadow: 0 0 20px 5px #dac11b;;
+  box-shadow: 0 0 20px 5px #dac11b;
 }
 
 /* 显示中奖号码的样式 */
 .winner-text {
   color: #dac11b;
   font-size: 60vh;
-=======
-  box-shadow: 0 0 20px 5px rgba(255, 255, 0, 0.7);
-}
-
-.winner-text {
-  color: rgb(255, 225, 0);
-  font-size: 50vh;
->>>>>>> ad5473a94f52df138ee1669eb6642fd6af60fa48
   text-align: center;
   cursor: pointer;
-
-
 }
 
-<<<<<<< HEAD
 /* 页面加载时标题的样式 */
 .onload-text {
-  color: #dac11b;;
-=======
-
-
-
-
-.onload-text {
-  color: rgb(255, 225, 0);
->>>>>>> ad5473a94f52df138ee1669eb6642fd6af60fa48
+  color: #dac11b;
   font-size: 25vh;
   text-align: center;
   cursor: pointer;
-
 }
 
 /* 抽奖运行时的数字样式 */
 .on-running {
-<<<<<<< HEAD
-  color: #dac11b;;
+  color: #dac11b;
   font-size: 35vh;
-=======
-  color: gold;
-  font-size: calc(25vh);
->>>>>>> ad5473a94f52df138ee1669eb6642fd6af60fa48
 }
 
 /* 已抽出的号码列表样式 */
@@ -127,7 +77,6 @@ p {
   bottom: 10px;
   left: 10px;
   font-size: 1rem;
-<<<<<<< HEAD
   color: #e23e3e;
   display: flex;
   flex-direction: row;
@@ -161,38 +110,5 @@ p {
 #muteButton:hover {
   background-color: #c0392b;
   color: #fff;
-  box-shadow: 0 0 20px 5px #dac11b;;
-=======
-  color: rgb(255, 0, 0);
-  display: flex;
-  flex-direction: row;
-  /* 修改为水平排列 */
-  align-items: center;
-  max-height: calc(100vh - 20px);
-  overflow-x: auto;
-  /* 使用水平滚动 */
-  white-space: nowrap;
-  /* 防止换行 */
-}
-
-.displayed-numbers span {
-  margin-right: 5px;
-  /* 调整号码之间的间距 */
-}
-
-/* 新添加的样式 */
-#muteButton {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  padding: 10px;
-  background-color: transparent;
-  /* 透明背景 */
-  border: none;
-  cursor: pointer;
-  opacity: 0.7;
-  /* 设置透明度 */
-  color: #fff;
-  /* 设置文本颜色为白色 */
->>>>>>> ad5473a94f52df138ee1669eb6642fd6af60fa48
+  box-shadow: 0 0 20px 5px #dac11b;
 }
