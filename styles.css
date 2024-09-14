@@ -15,10 +15,10 @@ body {
   /* 设置背景图片顶端对齐 */
 }
 
-h1,p {
+h1,
+p {
   text-align: center;
 }
-
 
 /* 抽奖按钮容器 */
 .button-container {
