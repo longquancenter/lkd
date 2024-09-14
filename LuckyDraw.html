@@ -5,7 +5,11 @@
   <meta charset="UTF-8">
   <title>幸运大抽奖</title>
   
+<<<<<<< HEAD
 <link rel="stylesheet" href="styles.css">
+=======
+  <link rel="stylesheet" type="text/css" href="styles.css">
+>>>>>>> ad5473a94f52df138ee1669eb6642fd6af60fa48
 
 </head>
 
@@ -28,8 +32,12 @@
 
   <script>
     // 定义常量
+<<<<<<< HEAD
     const upperLimit = 30; // 参与抽奖的人数上限
     const startNumber = 10; // 定义随机数生成的开始号码
+=======
+    const upperLimit = 300; // 参与抽奖的人数上限
+>>>>>>> ad5473a94f52df138ee1669eb6642fd6af60fa48
     const timeInterval = 50; // 数字滚动时间间隔，单位毫秒
     const lotteryTitleText = "幸运大抽奖"; // 抽奖标题文本
     const startButtonText = "开始抽奖"; // 开始抽奖按钮文本
@@ -94,7 +102,11 @@
       if (intervalId) {
         clearInterval(intervalId);
         intervalId = null;
+<<<<<<< HEAD
         if (displayedNumbers.length < upperLimit - startNumber + 1) {
+=======
+        if (displayedNumbers.length < upperLimit) {
+>>>>>>> ad5473a94f52df138ee1669eb6642fd6af60fa48
           toggleButton.textContent = continueButtonText; // 达到上限前将按钮文本设为"继续抽奖"
         }
         playMusic(); // 停止抽奖时停止播放音乐
