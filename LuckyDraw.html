@@ -1,24 +1,44 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-  <title>幸运大抽奖</title>
   <meta charset="UTF-8">
-  <link rel="stylesheet" type="text/css" href="styles.css">
+  <title>幸运大抽奖</title>
+  
+<link rel="stylesheet" href="styles.css">
+
 </head>
+
 <body>
   <h1 id="pageTitle"></h1>
   <div class="button-container">
     <button id="toggleButton">开始抽奖</button>
   </div>
   <div class="displayed-numbers" id="displayedNumbers"></div>
-  
+ <!-- 开始抽奖的音乐 -->
+  <audio id="backgroundMusic">
+    <source src="play_music.mp3" type="audio/mpeg">
+  </audio>
+  <!-- 中奖音乐 -->
+  <audio id="winningMusic">
+    <source src="winning_music.mp3" type="audio/mpeg">
+  </audio>
+  <!-- 静音按钮 -->
+  <button id="muteButton">静音</button>
+
   <script>
     // 定义常量
-    const upperLimit = 10; // 参与抽奖的人数上限
+    const upperLimit = 30; // 参与抽奖的人数上限
+    const startNumber = 10; // 定义随机数生成的开始号码
     const timeInterval = 50; // 数字滚动时间间隔，单位毫秒
-    
+    const lotteryTitleText = "幸运大抽奖"; // 抽奖标题文本
+    const startButtonText = "开始抽奖"; // 开始抽奖按钮文本
+    const continueButtonText = "继续"; // 继续抽奖按钮文本
+    const stopButtonText = "停。。"; // 停止抽奖按钮文本
+    const resetButtonText = "重新再来一次"; // 重新加载页面按钮文本
+
     // 声明全局变量
-    let intervalId; // 用于存储计时器的ID，控制抽奖的开始和停止
+    let intervalId = null; // 用于存储计时器的ID，控制抽奖的开始和停止
     const displayedNumbers = []; // 存储已显示的号码
     let maxLimitReached = false; // 用于跟踪是否达到上限
 
@@ -27,12 +47,15 @@
     const toggleButton = document.getElementById("toggleButton");
     const displayedNumbersElement = document.getElementById("displayedNumbers");
 
+    // 获取静音按钮
+    const muteButton = document.getElementById("muteButton");
+
     // 生成随机数字
     function generateRandomNumber() {
       let randomNumber;
       do {
-        // 随机生成一个数字，确保不会重复
-        randomNumber = Math.floor(Math.random() * upperLimit) + 1;
+        // 在 startNumber 和 upperLimit 之间随机生成一个数字，确保不会重复
+        randomNumber = Math.floor(Math.random() * (upperLimit - startNumber + 1)) + startNumber;
       } while (displayedNumbers.includes(randomNumber));
 
       pageTitle.textContent = "";
@@ -46,14 +69,14 @@
       if (intervalId === null) {
         displayedNumbers.push(randomNumber);
         updateDisplayedNumbers();
-        if (displayedNumbers.length === upperLimit) {
+        if (displayedNumbers.length === upperLimit - startNumber + 1) {
           pageTitle.textContent = "";
           const lastNumberSpan = document.createElement("span");
           lastNumberSpan.textContent = randomNumber;
           lastNumberSpan.classList.toggle("on-running", intervalId !== null);
           lastNumberSpan.classList.toggle("winner-text", intervalId === null);
           pageTitle.appendChild(lastNumberSpan);
-          toggleButton.textContent = "再来一次";
+          toggleButton.textContent = resetButtonText;
           toggleButton.onclick = () => window.location.reload();
           maxLimitReached = true; // 达到上限
           return; // 停止运行程序
@@ -67,16 +90,19 @@
         window.location.reload(); // 达到上限时，点击按钮将重新加载整个页面
         return;
       }
+
       if (intervalId) {
         clearInterval(intervalId);
         intervalId = null;
-        if (displayedNumbers.length < upperLimit) {
-          toggleButton.textContent = "继续抽奖"; // 达到上限前将按钮文本设为"继续抽奖"
+        if (displayedNumbers.length < upperLimit - startNumber + 1) {
+          toggleButton.textContent = continueButtonText; // 达到上限前将按钮文本设为"继续抽奖"
         }
+        playMusic(); // 停止抽奖时停止播放音乐
         generateRandomNumber(); // 开始抽奖
       } else {
-        intervalId = setInterval(generateRandomNumber, timeInterval); // 启动计时器，定时抽奖
-        toggleButton.textContent = "停"; // 开始抽奖时的按钮文字
+        intervalId = setInterval(generateRandomNumber, timeInterval);
+        toggleButton.textContent = stopButtonText; // 开始抽奖时的按钮文字
+        playMusic(); // 开始抽奖时播放音乐
       }
     }
 
@@ -90,16 +116,55 @@
       }
     }
 
+    // 添加音乐播放功能
+    function playMusic() {
+      const backgroundMusic = document.getElementById("backgroundMusic");
+      const winningMusic = document.getElementById("winningMusic");
+
+      // 判断抽奖状态（通过 intervalId 是否存在）
+      if (intervalId) {
+        backgroundMusic.play(); // 如果抽奖正在进行，播放背景音乐
+        winningMusic.pause(); // 暂停音乐
+        winningMusic.currentTime = 0; // 重置音乐到开始位置
+
+      } else {
+        backgroundMusic.pause(); // 如果抽奖已停止，暂停背景音乐
+        backgroundMusic.currentTime = 0; // 重置音乐到开始位置
+        winningMusic.play(); // 如果抽奖已停止，播放中奖音乐
+      }
+    }
+
+    // 控制静音状态的函数
+    function toggleMute() {
+      const backgroundMusic = document.getElementById("backgroundMusic");
+      const winningMusic = document.getElementById("winningMusic");
+
+      // 切换音乐的静音状态
+      backgroundMusic.muted = !backgroundMusic.muted;
+      winningMusic.muted = !winningMusic.muted;
+
+      // 根据静音状态更新按钮文本
+      if (backgroundMusic.muted && winningMusic.muted) {
+        muteButton.textContent = "取消静音";
+      } else {
+        muteButton.textContent = "静音";
+      }
+    }
+
     // 页面加载完成后执行的初始化操作
-    window.onload = function() {
-      pageTitle.textContent = "幸运大抽奖";
+    window.onload = function () {
+      pageTitle.textContent = lotteryTitleText;
       pageTitle.classList.add("onload-text"); // 添加初始样式类
-      toggleButton.textContent = "开始抽奖"; // 设置按钮初始文本
-      
+      toggleButton.textContent = startButtonText; // 设置按钮初始文本
+
       // 添加事件监听器
       toggleButton.addEventListener("click", toggleGeneratingNumbers);
       pageTitle.addEventListener("click", toggleGeneratingNumbers);
+      muteButton.addEventListener("click", toggleMute);
     };
+
   </script>
+
 </body>
+
 </html>
